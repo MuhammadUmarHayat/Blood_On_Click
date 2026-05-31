@@ -1,0 +1,36 @@
+Donation history :
+SELECT 
+    dh.donation_id,
+    dh.donation_date,
+    dh.units_donated,
+    dh.status,
+    u.name AS donor_name,
+    u.contact_no,
+    dd.blood_group,
+    bb.bank_name,
+    bb.location AS bank_location
+FROM donation_history dh
+JOIN donor_details dd ON dh.donor_id = dd.donor_id
+JOIN users u ON dd.user_id = u.email
+JOIN blood_banks bb ON dh.bank_id = bb.bank_id;
+-------------------------------------------------------
+
+Medical assessment with Donor and Doctor Details:
+way 1: 
+SELECT 
+    u_donor.name AS donor_name,
+    u_doctor.name AS doctor_name,
+     u_donor.age AS donor_age,
+    ma.assessment_date,
+    ma.blood_group,
+    ma.hemoglobin_level,
+    ma.blood_pressure,
+    ma.remarks
+FROM medical_assessments ma
+-- LEFT JOIN use karein taaky agar doctor na bhi ho to donor nazar aaye
+LEFT JOIN users u_donor ON ma.donor_id = u_donor.email
+LEFT JOIN users u_doctor ON ma.assessed_by = u_doctor.email;
+
+...................................................
+way 1:
+SELECT d.name AS donor_name, d.email AS donor_email, ma.assessment_date, ma.blood_group, ma.hemoglobin_level, ma.blood_pressure, ma.pulse, ma.vital_signs, ma.remarks, doc.name AS doctor_name, doc.email AS doctor_email FROM medical_assessments ma LEFT JOIN users d ON ma.donor_id = d.email LEFT JOIN users doc ON ma.assessed_by = doc.email;

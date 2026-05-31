@@ -1,0 +1,34 @@
+SELECT 
+    b.bank_name,
+    s.group AS blood_group,
+    SUM(s.qty) AS total_quantity
+FROM 
+    `blood_banks` b
+JOIN 
+    `blood_stocks` s ON b.bank_id = s.bank_id
+GROUP BY 
+    b.bank_name, 
+    s.group
+ORDER BY 
+    b.bank_name, 
+    s.group;
+/////////////////////////
+SELECT 
+    b.bank_name,
+    b.location,
+    s.group AS blood_group,
+    SUM(s.qty) AS total_quantity
+FROM 
+    `blood_banks` b
+JOIN 
+    `blood_stocks` s ON b.bank_id = s.bank_id
+WHERE 
+    b.location = 'Lahore' 
+    OR s.group = 'O+'
+GROUP BY 
+    b.bank_name, 
+    b.location,
+    s.group
+ORDER BY 
+    b.bank_name, 
+    s.group;
